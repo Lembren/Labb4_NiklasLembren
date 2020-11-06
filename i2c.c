@@ -110,29 +110,37 @@ uint8_t eeprom_read_byte(uint8_t addr) {
 	uint8_t status_read;
 
 	i2c_start();
-	i2c_meaningful_status(i2c_get_status());
+	//i2c_meaningful_status(i2c_get_status());
 
 
-	i2c_xmit_addr(0xA0, 0); //adress + read
-	i2c_meaningful_status(i2c_get_status());
+	i2c_xmit_addr(0xA0, 0); //adress + write
+	//i2c_meaningful_status(i2c_get_status());
 
 	i2c_xmit_byte(addr);
-	i2c_meaningful_status(i2c_get_status());
+	//i2c_meaningful_status(i2c_get_status());
 
 	i2c_start();
 	i2c_xmit_addr(0xA0, 1); //adress + read
-	i2c_meaningful_status(i2c_get_status());
+	//i2c_meaningful_status(i2c_get_status());
 
 	status_read = i2c_read_NAK();
 
-	i2c_meaningful_status(i2c_get_status());
+	//i2c_meaningful_status(i2c_get_status());
 
 	i2c_stop();
 	return status_read;
 }
 
 void eeprom_write_byte(uint8_t addr, uint8_t data) {
-//...
+	i2c_start();
+	//i2c_meaningful_status(i2c_get_status());
+	i2c_xmit_addr(0xA0, 0);  // Send controll adress
+	//i2c_meaningful_status(i2c_get_status());
+	i2c_xmit_byte(addr);				//storage adress
+	//i2c_meaningful_status(i2c_get_status());
+	i2c_xmit_byte(data);				// send data
+	//i2c_meaningful_status(i2c_get_status());
+	i2c_stop();
 }
 
 
